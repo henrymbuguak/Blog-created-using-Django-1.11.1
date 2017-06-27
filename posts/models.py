@@ -16,3 +16,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("posts:post_detail", kwargs={"id": self.id})
         #return "/blog/%s/" %(self.id)
+
+    class Meta:
+        ordering = ["-timestamp","-updated"]

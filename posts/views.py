@@ -6,6 +6,7 @@ from .models import Post
 from .forms import PostForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -35,10 +36,21 @@ def post_create(request):
     return render(request, "post_form.html", context)
 
 def post_list(request):
-    queryset = Post.objects.all()
+    queryset_list = Post.objects.all()#.order_by("-timestamp")
+    paginator = Paginator(queryset_list,5)
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+
     context = {
         "object_list": queryset,
-        "Title": "List"
+        "Title": "List",
+        "page_request_var": page_request_var,
     }
     return render(request, "post_list.html", context)
 
