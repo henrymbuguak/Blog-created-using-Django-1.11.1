@@ -14,7 +14,9 @@
         {% for obj in object_list %}
        <div class="col-sm-12 ">
            <div class="thumbnail">
-               {% comment %}<img src="..." alt="...">{% endcomment %}
+               {% if obj.image %}
+                   <img src="{{ obj.image.url }}" alt="" class="img-responsive">
+               {% endif %}
                <div class="caption">
                    <h3><a href="{{ obj.get_absolute_url  }}">{{ obj.title }}</a><small> {{ obj.timestamp|timesince }} ago</small></h3>
                    <p>{{ obj.content|linebreaks|truncatechars:120 }}</p>

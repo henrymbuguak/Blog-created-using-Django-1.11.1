@@ -2,7 +2,11 @@
 {% block head_title %}{{ instance.title }} | {{ block.super }}{% endblock %}
 {% block content %}
 <div class="col-sm-6 col-sm-offset-3">
-    <h1>{{ Title }} <small>{{ instance.timestamp }}<br></small> </h1>
+<h1>{{ Title }} <small>{{ instance.timestamp }}<br></small> </h1>
+     {% if instance.image %}
+         <img src="{{ instance.image.url }}" alt="" class="img-responsive">
+     {% endif %}
+
 <p>
         {{ instance.content | linebreaks }}<br>
 </p>
