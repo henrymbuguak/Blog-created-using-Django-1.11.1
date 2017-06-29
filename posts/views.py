@@ -7,14 +7,17 @@ from .forms import PostForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from urllib import quote_plus
 
 # Create your views here.
 
 def index(request, id):
     instance = get_object_or_404(Post, id=id)
+    share_string = quote_plus(instance.content)
     context = {
         "Title": instance.title,
-        "instance": instance
+        "instance": instance,
+        "share_string": share_string
     }
     return render(request, "post_detail.html", context)
 
