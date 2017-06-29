@@ -5,6 +5,12 @@
 {% block content %}
 <div class="col-sm-6 col-sm-offset-3">
 <h1>{{ Title }} <small>{{ instance.timestamp }}<br></small> </h1>
+{% if instance.user.get_full_name %}
+    <p>Author: {{ instance.user.get_full_name }}</p>
+    {% else %}
+    <p>Author: {{ instance.user }}</p>
+{% endif %}
+
      {% if instance.image %}
          <img src="{{ instance.image.url }}" alt="" class="img-responsive">
      {% endif %}
