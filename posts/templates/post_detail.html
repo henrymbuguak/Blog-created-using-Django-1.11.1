@@ -10,6 +10,7 @@
     {% else %}
     <p>Author: {{ instance.user }}</p>
 {% endif %}
+<div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
 
      {% if instance.image %}
          <img src="{{ instance.image.url }}" alt="" class="img-responsive">
@@ -29,6 +30,7 @@
         Linkedin
     </a>
     {{ instance.content|linebreaks }}<br>
+    <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
 </p>
 
 </div>
