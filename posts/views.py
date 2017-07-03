@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from .forms import PostForm
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -51,6 +52,10 @@ def post_list(request):
     today = timezone.now().date()
     if not request.user.is_staff or not request.user.is_superuser:
         queryset_list = Post.objects.all()
+
+    query = request.GET.get("query")
+    if query:
+        queryset_list = queryset_list.filter(Q(title__icontains=query)|Q(content__icontains=query)|Q(user__first_name__icontains=query)).distinct()
     paginator = Paginator(queryset_list,5)
     page_request_var = "page"
     page = request.GET.get(page_request_var)

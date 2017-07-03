@@ -10,6 +10,12 @@
 {% endif %}
     <div class="col-sm-8 col-sm-offset-2">
     <h1>{{ Title }}</h1>
+
+        <form action="" method="get">
+            <input type="text" placeholder="Search" name="query" value="{{ request.GET.query  }}">
+            <input type="submit" value="Search">
+        </form>
+
         <div class="row">
         {% for obj in object_list %}
        <div class="col-sm-12 ">
@@ -40,14 +46,18 @@
         <div class="pagination">
             <span class="step-links">
                 {% if  object_list.has_previous%}
-                    <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}">previous</a>
+                    <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.query %}
+                    &{{ request.GET.query }}
+                    {% endif %}">previous</a>
                 {% endif %}
 
             <span class="current">
                 Page{{ object_list.number }} of {{ object_list.paginator.num_pages }}.
             </span>
             {% if object_list.has_next %}
-                <a href="?{{ page_request_var }}={{ object_list.next_page_number }}">next </a>
+                <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.query %}
+                &{{ request.GET.query }}
+                {% endif %}">next </a>
             {% endif %}
 
             </span>
